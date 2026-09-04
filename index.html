@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Doomsday Marathon</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#070b08; --panel:#10170f; --panel2:#172017; --line:#5f6968; --silver:#9ba5a4; --pale:#e4e7e3; --green:#527d4e; --bright:#88ad71; --danger:#a45145; }
+    * { box-sizing:border-box; font-family:"Cinzel", Georgia, serif; }
+    body { margin:0; min-height:100vh; color:var(--pale); background:linear-gradient(rgba(4,9,5,.82),rgba(4,9,5,.94)),url("avengers-background.jpg") center/cover fixed; letter-spacing:.035em; }
+    body::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.42; background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 4px); }
+    button,input { font:inherit; } button { cursor:pointer; }
+    .shell { width:min(1180px,calc(100% - 32px)); margin:auto; padding:24px 0 60px; position:relative; }
+    header { width:fit-content; max-width:100%; margin:0 auto; text-align:center; padding:0; position:relative; }
+    header::before,header::after { content:none; }
+    .logo { width:min(1000px,calc(100vw - 32px)); max-height:319px; object-fit:contain; display:block; margin:0 auto; filter:drop-shadow(0 7px 12px #000); }
+    .fallback-title { font-weight:900; font-size:clamp(2rem,6vw,4.4rem); color:var(--bright); text-shadow:2px 2px #000; margin:0; }
+    .topbar { margin-top:18px; display:flex; gap:10px; justify-content:space-between; align-items:center; flex-wrap:wrap; }
+    .language, .tools { display:flex; gap:8px; flex-wrap:wrap; }
+    .btn { border:1px solid var(--line); color:var(--pale); background:linear-gradient(#263224,#111910); padding:10px 13px; font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; transition:.18s; }
+    .btn:hover,.btn.active { background:linear-gradient(#66845a,#304b2d); color:#f2f5f3; border-color:#a8b1b0; transform:translateY(-1px); }
+    .btn.silver { color:#101313; background:linear-gradient(#b4bebd,#687271); border-color:#c4cdcc; } .btn.danger { background:linear-gradient(#81483f,#40221e); }
+    main { margin-top:18px; }
+    .card { background:linear-gradient(145deg,rgba(22,31,21,.97),rgba(9,14,9,.97)); border:1px solid var(--line); box-shadow:0 10px 28px #0009, inset 0 0 24px #0006; }
+    .form-card { padding:20px; }
+    h2 { margin:0 0 17px; color:var(--silver); font-size:1rem; letter-spacing:.14em; font-weight:800; text-align:center; }
+    label { display:block; color:#c8cfce; font-size:.67rem; font-weight:700; margin:15px 0 7px; text-transform:uppercase; }
+    input[type=text] { width:100%; color:var(--pale); background:#080d08; border:1px solid #596260; padding:11px; outline:none; } input[type=text]:focus { border-color:var(--silver); }
+    input[type=file] { width:100%; font-size:.63rem; color:#c4cbca; } input[type=file]::file-selector-button { font:inherit; color:var(--pale); background:#273426; border:1px solid var(--line); padding:8px; margin-right:9px; }
+    .poster-preview { height:145px; margin-top:10px; border:1px dashed #68716f; background:#080d08; display:grid; place-items:center; overflow:hidden; color:#929b99; font-size:.65rem; text-align:center; padding:10px; }
+    .poster-preview img { width:100%; height:100%; object-fit:cover; } .form-card .btn { width:100%; margin-top:19px; }
+    .list-card { min-height:500px; padding:20px; } .list-head { display:flex; justify-content:space-between; align-items:center; gap:10px; border-bottom:1px solid #58615f; padding-bottom:13px; margin-bottom:14px; }
+    .list-head h2 { margin:0; text-align:left; } .counter { color:var(--bright); font-weight:700; font-size:.7rem; white-space:nowrap; }
+    .movie-list { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; align-items:start; }
+    .movie { background:linear-gradient(145deg,#1b261a,#101710); border:1px solid #515a58; padding:9px; position:relative; transition:.18s; overflow:hidden; }
+    .movie:hover { border-color:#929c9a; } .movie.dragging { opacity:.45; } .movie.watched { opacity:1; border-width:5px; border-color:var(--silver); }
+    .drag { position:absolute; z-index:1; top:10px; right:11px; width:27px; height:27px; display:grid; place-items:center; color:#edf0ee; background:#101610cc; border:1px solid #66706e; font-size:1rem; cursor:grab; }
+    .movie-poster { width:100%; aspect-ratio:2 / 3; height:auto; object-fit:cover; display:block; border:1px solid #66706e; background:#070b08; }
+    .movie-info { min-height:68px; padding:11px 3px 8px; display:flex; align-items:center; } .movie-title { margin:0; font-size:1rem; color:#edf0ee; font-weight:800; line-height:1.45; }
+    .actions { display:grid; grid-template-columns:42px 42px 1fr; gap:7px; } .icon-btn { background:#202b1e; color:var(--pale); border:1px solid #596260; min-height:39px; font-size:1.08rem; font-weight:800; } .icon-btn:hover { border-color:var(--silver); background:#435b3e; } .icon-btn.delete:hover { background:#6b352f; } .icon-btn.watch { font-size:1.18rem; }
+    .add-movie-tile { aspect-ratio:2 / 3; display:grid; place-items:center; color:var(--silver); background:linear-gradient(145deg,#172016,#0d130d); border:2px dashed #687270; font-size:4rem; font-weight:400; line-height:1; transition:.18s; } .add-movie-tile:hover { color:#f0f3f1; border-color:#b2bcba; background:#263624; transform:translateY(-2px); }
+    .all-movies { margin-top:25px; border:1px solid #596260; background:#0b100b99; } .all-movies summary { padding:13px 15px; color:var(--silver); font-size:.7rem; font-weight:800; letter-spacing:.1em; cursor:pointer; list-style:none; } .all-movies summary::-webkit-details-marker { display:none; } .all-movies summary::after { content:"+"; float:right; font-size:1rem; } .all-movies[open] summary { border-bottom:1px solid #596260; } .all-movies[open] summary::after { content:"−"; } .all-movies ol { margin:0; padding:12px 18px 15px 38px; columns:2; color:#dfe4e1; font-size:.68rem; font-weight:700; line-height:2; } .all-movies li { break-inside:avoid; }
+    .empty { min-height:355px; display:grid; place-items:center; text-align:center; color:#9da6a4; padding:35px; } .empty strong { display:block; color:var(--silver); font-size:1rem; margin-bottom:12px; }
+    dialog { color:var(--pale); border:1px solid var(--silver); background:linear-gradient(145deg,#1b2719,#0b100b); max-width:450px; width:calc(100% - 32px); padding:22px; box-shadow:0 20px 80px #000; } dialog::backdrop { background:#000b; } dialog h2 { text-align:left; } dialog menu { display:flex; padding:0; gap:9px; justify-content:flex-end; margin:19px 0 0; } .movie-dialog { position:fixed; z-index:10; inset:0; display:grid; place-items:center; padding:16px; background:#000c; } .movie-dialog[hidden] { display:none; } .movie-dialog .form-card { width:min(450px,100%); border:1px solid var(--silver); background:linear-gradient(145deg,#1b2719,#0b100b); box-shadow:0 20px 80px #000; }
+    .notice { position:fixed; left:50%; bottom:20px; transform:translate(-50%,120px); background:#253821; color:#edf0ee; border:1px solid var(--silver); padding:12px 18px; font-size:.7rem; transition:.25s; z-index:3; } .notice.show { transform:translate(-50%,0); }
+    @media(max-width:760px){.movie-list{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:11px}.all-movies ol{columns:1}.topbar{justify-content:center}.list-head{align-items:flex-start}.shell{width:min(100% - 20px,1180px)} }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <img class="logo" src="doomsday-logo.png" alt="Doomsday" onerror="this.hidden=true;document.querySelector('.fallback-title').hidden=false">
+      <h1 class="fallback-title" hidden>DOOMSDAY</h1>
+    </header>
+    <div class="topbar">
+      <div class="language"><button class="btn active" data-lang="hu">Magyar</button><button class="btn" data-lang="en">English</button></div>
+      <div class="tools"><button class="btn" id="exportBtn" data-i18n="export">Exportálás</button><label class="btn" for="importFile" data-i18n="import">Importálás</label><input id="importFile" type="file" accept="application/json" hidden><button class="btn danger" id="clearBtn" data-i18n="clear">Lista törlése</button></div>
+    </div>
+    <main>
+      <section class="card list-card">
+        <div class="list-head"><span class="counter" id="counter"></span></div>
+        <div class="movie-list" id="movieList"></div>
+        <details class="all-movies"><summary data-i18n="allMovies">Összes film a listában</summary><ol id="allMoviesNames"></ol></details>
+      </section>
+    </main>
+  </div>
+  <div id="movieDialog" class="movie-dialog" hidden role="dialog" aria-modal="true" aria-labelledby="formHeading">
+      <section class="form-card">
+        <h2 id="formHeading" data-i18n="addHeading">Film hozzáadása</h2>
+        <form id="movieForm">
+          <input id="editingId" type="hidden">
+          <label for="title" data-i18n="titleLabel">Film címe</label><input id="title" type="text" required maxlength="120" autocomplete="off">
+          <label for="poster" data-i18n="posterLabel">Saját poszter</label><input id="poster" type="file" accept="image/*">
+          <div class="poster-preview" id="preview"><span data-i18n="posterHint">Válassz egy képfájlt</span></div>
+          <button class="btn silver" type="submit" id="submitBtn" data-i18n="add">Felvétel a listára</button>
+          <button class="btn" type="button" id="cancelBtn" hidden data-i18n="cancel">Mégse</button>
+        </form>
+      </section>
+  </div>
+  <dialog id="confirmDialog"><h2 id="dialogTitle"></h2><p id="dialogText" style="font-size:.75rem;line-height:1.7;color:#c5ccca"></p><menu><button class="btn" id="cancelConfirm" type="button" data-i18n="cancel">Mégse</button><button class="btn danger" id="confirmAction" type="button" data-i18n="confirm">Megerősítés</button></menu></dialog>
+  <div class="notice" id="notice"></div>
+  <script>
+    const KEY='doomsday-marathon-v1'; let movies=JSON.parse(localStorage.getItem(KEY)||'[]').map(m=>({...m,id:String(m.id||crypto.randomUUID())})), lang=localStorage.getItem(KEY+'-lang')||'hu', pendingPoster='', dragId=null;
+    const T={hu:{motto:'A VÉGZET MARATONJA',export:'Exportálás',import:'Importálás',clear:'Lista törlése',addHeading:'Film hozzáadása',editHeading:'Film szerkesztése',titleLabel:'Film címe',posterLabel:'Saját poszter',posterHint:'Válassz egy képfájlt',add:'Felvétel a listára',save:'Változások mentése',cancel:'Mégse',addTile:'Új film hozzáadása',listHeading:'A maraton tekercsei',allMovies:'Összes film a listában',watched:'Megnézve',unwatched:'Még nincs megnézve',edit:'Szerkesztés',delete:'Törlés',emptyTitle:'A lista még üres',emptyText:'Add hozzá az első filmet a Doomsday maratonhoz.',count:'film',countPlural:'film',clearTitle:'Biztosan törlöd az egész listát?',clearText:'Ez a művelet nem vonható vissza.',deleteTitle:'Törlöd ezt a filmet?',deleteText:'A film végleg eltűnik a listáról.',confirm:'Megerősítés',saved:'A lista elmentve.',storageWarning:'A film bekerült a listába, de a böngésző helyi tárhelye megtelt. Exportáld a listát.',imported:'A lista importálva.',badImport:'Érvénytelen importfájl.'},en:{motto:'THE MARATHON OF DOOM',export:'Export',import:'Import',clear:'Clear list',addHeading:'Add a film',editHeading:'Edit film',titleLabel:'Film title',posterLabel:'Custom poster',posterHint:'Choose an image file',add:'Add to list',save:'Save changes',cancel:'Cancel',addTile:'Add a new film',listHeading:'The marathon scrolls',allMovies:'All films in the list',watched:'Watched',unwatched:'Not watched yet',edit:'Edit',delete:'Delete',emptyTitle:'The list is still empty',emptyText:'Add the first film to the Doomsday marathon.',count:'film',countPlural:'films',clearTitle:'Clear the whole list?',clearText:'This action cannot be undone.',deleteTitle:'Delete this film?',deleteText:'The film will be permanently removed.',confirm:'Confirm',saved:'List saved.',storageWarning:'The film was added, but browser storage is full. Export the list.',imported:'List imported.',badImport:'Invalid import file.'}};
+    const $=s=>document.querySelector(s), esc=s=>String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+    function save(){try{localStorage.setItem(KEY,JSON.stringify(movies));return true}catch{return false}} function text(k){return T[lang][k]} function toast(msg){$('#notice').textContent=msg;$('#notice').classList.add('show');setTimeout(()=>$('#notice').classList.remove('show'),2200)}
+    function setLanguage(){document.documentElement.lang=lang;document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=text(e.dataset.i18n));document.querySelectorAll('[data-lang]').forEach(e=>e.classList.toggle('active',e.dataset.lang===lang)); $('#formHeading').textContent=$('#editingId').value?text('editHeading'):text('addHeading'); $('#submitBtn').textContent=$('#editingId').value?text('save'):text('add'); localStorage.setItem(KEY+'-lang',lang);render();}
+    function render(){const list=$('#movieList'); const n=movies.length; $('#counter').textContent=n+' '+(n===1?text('count'):text('countPlural')); $('#allMoviesNames').innerHTML=movies.map(m=>`<li>${esc(m.title)}</li>`).join(''); list.innerHTML=movies.map(m=>`<article class="movie ${m.watched?'watched':''}" draggable="true" data-id="${m.id}"><div class="drag" title="Drag">☷</div><img class="movie-poster" src="${m.poster||''}" alt="" onerror="this.style.visibility='hidden'"><div class="movie-info"><h3 class="movie-title">${esc(m.title)}</h3></div><div class="actions"><button class="icon-btn edit" data-id="${m.id}" title="${text('edit')}" aria-label="${text('edit')}">✎</button><button class="icon-btn delete" data-id="${m.id}" title="${text('delete')}" aria-label="${text('delete')}">−</button><button class="icon-btn watch" data-id="${m.id}" title="${m.watched?text('unwatched'):text('watched')}" aria-label="${m.watched?text('unwatched'):text('watched')}">${m.watched?'×':'✓'}</button></div></article>`).join('')+`<button class="add-movie-tile" type="button" data-add-movie aria-label="${text('addTile')}" title="${text('addTile')}">+</button>`;}
+    function closeMovieDialog(){$('#movieDialog').hidden=true} function resetForm(){ $('#movieForm').reset();$('#editingId').value='';pendingPoster='';$('#preview').innerHTML=`<span>${text('posterHint')}</span>`;$('#cancelBtn').hidden=false;closeMovieDialog();setLanguage();} function openAddDialog(){resetForm();$('#movieDialog').hidden=false;$('#title').focus();}
+    async function compactPoster(file){const raw=await new Promise((ok,bad)=>{const r=new FileReader;r.onload=()=>ok(r.result);r.onerror=bad;r.readAsDataURL(file)});const image=new Image();await new Promise((ok,bad)=>{image.onload=ok;image.onerror=bad;image.src=raw});const longest=Math.max(image.naturalWidth,image.naturalHeight),scale=Math.min(1,650/longest),canvas=document.createElement('canvas');canvas.width=Math.round(image.naturalWidth*scale);canvas.height=Math.round(image.naturalHeight*scale);canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);return canvas.toDataURL('image/jpeg',.8)}
+    $('#poster').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{pendingPoster=await compactPoster(f);$('#preview').innerHTML=`<img src="${pendingPoster}" alt="">`}catch{pendingPoster='';$('#preview').innerHTML=`<span>${text('posterHint')}</span>`}});
+    $('#movieForm').addEventListener('submit',e=>{e.preventDefault();const id=$('#editingId').value,title=$('#title').value.trim();if(!title)return;if(id){const m=movies.find(x=>String(x.id)===id);if(!m)return;m.title=title;if(pendingPoster)m.poster=pendingPoster;}else movies.push({id:crypto.randomUUID(),title,poster:pendingPoster,watched:false});const stored=save();resetForm();render();toast(stored?text('saved'):text('storageWarning'));});
+    $('#cancelBtn').onclick=resetForm; $('#movieDialog').addEventListener('click',e=>{if(e.target===e.currentTarget)resetForm()}); document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{lang=b.dataset.lang;setLanguage()});
+    $('#movieList').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.hasAttribute('data-add-movie')){openAddDialog();return}const id=String(b.dataset.id),m=movies.find(x=>String(x.id)===id);if(!m)return;if(b.classList.contains('watch')){m.watched=!m.watched;save();render();return}if(b.classList.contains('edit')){ $('#editingId').value=id;$('#title').value=m.title;pendingPoster=m.poster||'';$('#preview').innerHTML=pendingPoster?`<img src="${pendingPoster}" alt="">`:`<span>${text('posterHint')}</span>`;$('#cancelBtn').hidden=false;setLanguage();$('#movieDialog').hidden=false;return}if(b.classList.contains('delete'))confirm(text('deleteTitle'),text('deleteText'),()=>{movies=movies.filter(x=>String(x.id)!==id);save();render();toast(text('saved'))})});
+    $('#movieList').addEventListener('dragstart',e=>{const x=e.target.closest('.movie');if(!x)return;dragId=x.dataset.id;x.classList.add('dragging')});$('#movieList').addEventListener('dragend',e=>e.target.closest('.movie')?.classList.remove('dragging'));$('#movieList').addEventListener('dragover',e=>e.preventDefault());$('#movieList').addEventListener('drop',e=>{e.preventDefault();const target=e.target.closest('.movie');if(!target||target.dataset.id===dragId)return;const from=movies.findIndex(x=>String(x.id)===dragId),to=movies.findIndex(x=>String(x.id)===target.dataset.id);if(from<0||to<0)return;movies.splice(to,0,movies.splice(from,1)[0]);save();render()});
+    let pendingConfirmation=null; function confirm(title,msg,action){$('#dialogTitle').textContent=title;$('#dialogText').textContent=msg;pendingConfirmation=action;$('#confirmDialog').showModal()} $('#confirmAction').addEventListener('click',()=>{if(pendingConfirmation)pendingConfirmation();pendingConfirmation=null;$('#confirmDialog').close()}); $('#cancelConfirm').addEventListener('click',()=>{pendingConfirmation=null;$('#confirmDialog').close()}); $('#clearBtn').onclick=()=>confirm(text('clearTitle'),text('clearText'),()=>{movies=[];save();resetForm();render();toast(text('saved'))});
+    $('#exportBtn').onclick=()=>{const a=document.createElement('a'),blob=new Blob([JSON.stringify({version:1,movies},null,2)],{type:'application/json'});a.href=URL.createObjectURL(blob);a.download='doomsday-marathon.json';a.click();URL.revokeObjectURL(a.href)};
+    $('#importFile').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader;r.onload=()=>{try{const d=JSON.parse(r.result),arr=Array.isArray(d)?d:d.movies;if(!Array.isArray(arr))throw 0;movies=arr.filter(x=>x&&typeof x.title==='string').map(x=>({id:x.id||crypto.randomUUID(),title:x.title,poster:x.poster||'',watched:!!x.watched}));save();resetForm();render();toast(text('imported'))}catch{toast(text('badImport'))}};r.readAsText(f);e.target.value=''});
+    setLanguage();
+  </script>
+</body>
+</html>
