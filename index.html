@@ -185,7 +185,7 @@
 </head>
 <body>
   <div class="shell">
-    <nav class="site-nav" aria-label="Navigation">
+    <nav class="site-nav" aria-label="Navigáció" data-i18n-aria-label="navigation">
       <div class="nav-left">
         <button class="nav-icon back-nav" id="backNav" type="button" aria-label="Vissza" title="Vissza" disabled><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m14 5-7 7 7 7M7 12h14"/></svg></button>
         <button class="nav-icon active" id="homeNav" type="button" aria-label="Főoldal" title="Főoldal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-7 9 7M5 10v10h14V10M9 20v-6h6v6"/></svg></button>
@@ -206,7 +206,7 @@
       </div>
       <section class="release-section" id="releaseSection" aria-labelledby="releaseHeading">
         <h2 id="releaseHeading" data-i18n="releaseHeading">12.18.2026 IS DOOMSDAY</h2>
-        <img class="release-poster" id="releasePoster" src="doomsday-poster.png" alt="Avengers: Doomsday poszter">
+        <img class="release-poster" id="releasePoster" src="doomsday-poster.png" alt="Avengers: Doomsday poszter" data-i18n-alt="releasePosterAlt">
         <p class="release-date" data-i18n="releaseDate">2026. december 18.</p>
         <div class="countdown" id="countdown" role="timer" aria-live="off">
           <div><strong id="days">00</strong><span data-i18n="days">nap</span></div>
@@ -224,8 +224,8 @@
       <div class="saved-controls">
         <select id="savedListSelect" aria-describedby="savedListsHint"></select>
         <button class="btn" id="loadListBtn" type="button" data-i18n="loadList">Lista betöltése</button>
-        <button class="btn danger" id="deletePresetBtn" type="button" data-i18n="deletePreset">Preset törlése</button>
-        <button class="btn silver" id="saveListBtn" type="button" data-i18n="saveList">Save preset</button>
+        <button class="btn danger" id="deletePresetBtn" type="button" data-i18n="deletePreset">Mentett lista törlése</button>
+        <button class="btn silver" id="saveListBtn" type="button" data-i18n="saveList">Lista mentése</button>
       </div>
       <p class="saved-hint" id="savedListsHint" data-i18n="localHint">A mentések ezen az eszközön, ebben a böngészőben érhetők el. A böngészőadatok törlésével elvesznek; biztonsági másolathoz használd az Exportálást.</p>
     </section>
@@ -239,11 +239,11 @@
 
     </section>
     <section class="page preset-page" id="presetPage" hidden>
-      <div class="section-heading"><h1>PRESETS</h1></div>
+      <div class="section-heading"><h1 data-i18n="presetsHeading">PRESETEK</h1></div>
       <div class="preset-grid" id="presetGrid"></div>
     </section>
     <section class="page quotes-page" id="quotesPage" hidden>
-      <div class="section-heading"><span class="eyebrow">THE WORDS OF DOOM</span><h1>Doctor Doom</h1></div>
+      <div class="section-heading"><span class="eyebrow" data-i18n="quotesHeading">DOOM SZAVAI</span><h1>Doctor Doom</h1></div>
       <div class="quotes-grid" id="quotesGrid"></div>
     </section>
     <section class="page settings-page" id="settingsPage" hidden aria-labelledby="settingsHeading">
@@ -251,11 +251,11 @@
         <h1 id="settingsHeading" data-i18n="settings">Beállítások</h1>
         <h2 data-i18n="languageHeading">Nyelv</h2>
         <div class="topbar">
-      <div class="language"><button class="btn active" data-lang="hu">Magyar</button><button class="btn" data-lang="en">English</button></div>
+      <div class="language"><button class="btn active" data-lang="hu" data-i18n="hungarian">Magyar</button><button class="btn" data-lang="en" data-i18n="english">Angol</button></div>
         <h2 data-i18n="paletteHeading">Színpaletta</h2>
-        <div class="palette-options" role="group" aria-label="Színpaletta">
-          <button type="button" class="palette-option" data-theme-choice="comic"><span class="swatches"><i style="background:#06B977"></i><i style="background:#006B43"></i><i style="background:#9BA5A4"></i><i style="background:#09070B"></i><i style="background:#C38B24"></i><i style="background:#FFE98A"></i></span><strong>CLASSIC DOOM</strong></button>
-          <button type="button" class="palette-option" data-theme-choice="latveria"><span class="swatches"><i style="background:#24763A"></i><i style="background:#050708"></i><i style="background:#AB1E22"></i><i style="background:#24763A"></i><i style="background:#050708"></i><i style="background:#AB1E22"></i></span><strong>LATVERIA</strong></button>
+        <div class="palette-options" role="group" aria-label="Színpaletta" data-i18n-aria-label="paletteHeading">
+          <button type="button" class="palette-option" data-theme-choice="comic"><span class="swatches"><i style="background:#06B977"></i><i style="background:#006B43"></i><i style="background:#9BA5A4"></i><i style="background:#09070B"></i><i style="background:#C38B24"></i><i style="background:#FFE98A"></i></span><strong data-i18n="classicDoom">KLASSZIKUS DOOM</strong></button>
+          <button type="button" class="palette-option" data-theme-choice="latveria"><span class="swatches"><i style="background:#24763A"></i><i style="background:#050708"></i><i style="background:#AB1E22"></i><i style="background:#24763A"></i><i style="background:#050708"></i><i style="background:#AB1E22"></i></span><strong data-i18n="latveria">LATVÉRIA</strong></button>
           <button type="button" class="palette-option" data-theme-choice="doomsday"><span class="swatches"><i style="background:#171B18"></i><i style="background:#1B221F"></i><i style="background:#21371F"></i><i style="background:#334934"></i><i style="background:#6C8854"></i><i style="background:#DDE9B8"></i></span><strong>AVENGERS DOOMSDAY</strong></button>
         </div>
         <h2 data-i18n="dataHeading">Adatok</h2>
@@ -279,15 +279,15 @@
   </div>
   <dialog id="confirmDialog"><h2 id="dialogTitle"></h2><p id="dialogText" style="font-size:.75rem;line-height:1.7;color:#c5ccca"></p><menu><button class="btn" id="cancelConfirm" type="button" data-i18n="cancel">Mégse</button><button class="btn danger" id="confirmAction" type="button" data-i18n="confirm">Megerősítés</button></menu></dialog>
   <dialog id="saveListDialog" aria-labelledby="saveListHeading">
-    <h2 id="saveListHeading" data-i18n="saveList">Save preset</h2>
+    <h2 id="saveListHeading" data-i18n="saveList">Lista mentése</h2>
     <form id="saveListForm">
       <label for="listName" data-i18n="listName">Lista neve</label>
       <input id="listName" type="text" required maxlength="100" autocomplete="off">
-      <label for="presetCover" data-i18n="presetCover">Preset borítóképe (nem kötelező)</label>
+        <label for="presetCover" data-i18n="presetCover">Mentett lista borítóképe (nem kötelező)</label>
       <input id="presetCover" type="file" accept="image/*">
       <div class="poster-preview" id="presetCoverPreview"></div>
       <p id="saveListError" role="alert" hidden></p>
-      <menu><button class="btn" id="cancelSaveList" type="button" data-i18n="cancel">Mégse</button><button class="btn silver" type="submit" data-i18n="saveList">Save preset</button></menu>
+      <menu><button class="btn" id="cancelSaveList" type="button" data-i18n="cancel">Mégse</button><button class="btn silver" type="submit" data-i18n="saveList">Lista mentése</button></menu>
     </form>
   </dialog>
   <div class="notice" id="notice" role="status" aria-live="polite"></div>
@@ -302,6 +302,8 @@
     Object.assign(T.en,{saveList:'Save preset',savedLists:'Saved lists',loadList:'Load list',deletePreset:'Delete preset',deletePresetTitle:'Delete this preset?',deletePresetText:'The saved list will be deleted. Your currently open list will remain.',presetDeleted:'Preset deleted.',presetDeleteError:'Could not delete the preset.',listName:'List name',noLists:'No saved lists yet',chooseList:'Choose a saved list',localHint:'Saved lists are available on this device in this browser. Clearing browser data removes them; use Export for a backup.',snapshotSaved:'Named list saved.',snapshotError:'Could not save. Browser storage is blocked or full. Try a regular browser window or use Export.',loadStorageWarning:'Preset loaded, but the current list could not be stored permanently. Export the list.',loadError:'Could not load. Your current list has been kept.',loaded:'Saved list loaded.',loadTitle:'Load the saved list?',loadText:'This replaces your current list. To keep the current version, use Save preset first.',overwriteTitle:'Overwrite the existing saved list?',overwriteText:'The current list will replace the previous save with this name.',nameRequired:'Enter a list name.',presetCover:'Preset cover (optional)',newPreset:'New preset',settings:'Settings',languageHeading:'Language',paletteHeading:'Color palette',dataHeading:'Data',homeNav:'Home',presets:'Presets',quotesNav:'Doctor Doom quotes',quotesSoon:'Doctor Doom quotes will appear here soon.'});
     Object.assign(T.hu,{back:'Vissza',scrollDown:'Görgess le a premierig ↓',releaseHeading:'12.18.2026 IS DOOMSDAY',releaseDate:'2026. december 18.',days:'nap',hours:'óra',minutes:'perc',seconds:'másodperc',countdownComplete:'Elérkezett a premier napja.',uploadReleasePoster:'Saját poszter feltöltése',posterUploaded:'A poszter elmentve.',posterUploadError:'A posztert nem sikerült elmenteni ebben a böngészőben.'});
     Object.assign(T.en,{back:'Back',scrollDown:'Scroll to the premiere ↓',releaseHeading:'12.18.2026 IS DOOMSDAY',releaseDate:'December 18, 2026',days:'days',hours:'hours',minutes:'minutes',seconds:'seconds',countdownComplete:'Premiere day is here.',uploadReleasePoster:'Upload your poster',posterUploaded:'Poster saved.',posterUploadError:'Could not save the poster in this browser.'});
+    Object.assign(T.hu,{saveList:'Lista mentése',deletePreset:'Mentett lista törlése',deletePresetTitle:'Törlöd ezt a mentett listát?',deletePresetText:'A mentett lista végleg törlődik. A most megnyitott lista megmarad.',presetDeleted:'Mentett lista törölve.',presetDeleteError:'Nem sikerült törölni a mentett listát.',snapshotSaved:'A névvel ellátott lista elmentve.',loadStorageWarning:'A mentett lista betöltődött, de az aktuális lista tartós mentése nem sikerült. Exportáld a listát.',loadText:'Ez lecseréli a jelenlegi listát. A mostani változat megőrzéséhez előbb mentsd el a Lista mentése gombbal.',presetCover:'Mentett lista borítóképe (nem kötelező)',newPreset:'Új mentett lista',presets:'Mentett listák',navigation:'Navigáció',presetsHeading:'MENTETT LISTÁK',quotesHeading:'DOOM SZAVAI',hungarian:'Magyar',english:'Angol',classicDoom:'KLASSZIKUS DOOM',latveria:'LATVÉRIA',releasePosterAlt:'Avengers: Doomsday poszter',drag:'Átrendezés',sourceLink:'Forrás megnyitása ↗'});
+    Object.assign(T.en,{navigation:'Navigation',presetsHeading:'SAVED LISTS',quotesHeading:'THE WORDS OF DOOM',hungarian:'Hungarian',english:'English',classicDoom:'CLASSIC DOOM',latveria:'LATVERIA',releasePosterAlt:'Avengers: Doomsday poster',drag:'Reorder',sourceLink:'Open source ↗'});
     const $=s=>document.querySelector(s), esc=s=>String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
     const presetDB=new Promise((resolve,reject)=>{
       if(!('indexedDB' in window)){reject(new Error('IndexedDB unavailable'));return}
@@ -445,9 +447,26 @@
       {q:"All of you have lived stolen lives. Now you must give them back.",src:"Avengers: Doomsday — bemutatott filmrészlet / footage (2026)",hu:"A 2026-os promóciós filmrészletben Doom a hősöket szólítja meg. A pontos írásjelezés eltérhet a végleges filmben.",en:"Doom addresses the heroes in 2026 promotional footage. Punctuation may differ in the finished film.",url:"https://www.marvel.com/movies/avengers-doomsday"},
       {q:"Hell answers to me! For I am DOOM!",src:"Avengers: Doomsday — bemutatott filmrészlet / footage (2026)",hu:"Doom a 2026-os promóciós filmrészletben mondja; a végleges film szövege eltérhet.",en:"Doom says this in 2026 promotional footage; the finished film may use different wording.",url:"https://www.marvel.com/movies/avengers-doomsday"}
     ];
-    function renderQuotes(){const grid=$('#quotesGrid');grid.replaceChildren();quotes.forEach(({q,src,hu,en,url})=>{const card=document.createElement('article');card.className='quote-card';const block=document.createElement('blockquote');block.textContent=q;const source=document.createElement('div');source.className='quote-source';source.textContent=src;const description=document.createElement('p');description.className='quote-description';description.textContent=lang==='hu'?hu:en;const link=document.createElement('a');link.className='quote-link';link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.textContent=lang==='hu'?'Forrás megnyitása ↗':'Open source ↗';card.append(block,source,description,link);grid.append(card)})}
-    function setLanguage(){document.documentElement.lang=lang;document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=text(e.dataset.i18n));document.querySelectorAll('[data-lang]').forEach(e=>e.classList.toggle('active',e.dataset.lang===lang)); [['backNav','back'],['homeNav','homeNav'],['quotesNav','quotesNav'],['settingsNav','settings'],['presetNav','presets']].forEach(([id,key])=>{$('#'+id).setAttribute('aria-label',text(key));$('#'+id).title=text(key)}); $('#formHeading').textContent=$('#editingId').value?text('editHeading'):text('addHeading'); $('#submitBtn').textContent=$('#editingId').value?text('save'):text('add'); try{localStorage.setItem(KEY+'-lang',lang)}catch{}render();renderQuotes();refreshPresets().catch(()=>{});}
-    function render(){const list=$('#movieList'); const n=movies.length; $('#counter').textContent=n+' '+(n===1?text('count'):text('countPlural')); $('#allMoviesNames').innerHTML=movies.map(m=>`<li>${esc(m.title)}</li>`).join(''); list.innerHTML=movies.map(m=>`<article class="movie ${m.watched?'watched':''}" draggable="true" data-id="${m.id}"><div class="drag" title="Drag">☷</div><img class="movie-poster" src="${m.poster||''}" alt="" onerror="this.style.visibility='hidden'"><div class="movie-info"><h3 class="movie-title">${esc(m.title)}</h3></div><div class="actions"><button class="icon-btn edit" data-id="${m.id}" title="${text('edit')}" aria-label="${text('edit')}">✎</button><button class="icon-btn delete" data-id="${m.id}" title="${text('delete')}" aria-label="${text('delete')}">−</button><button class="icon-btn watch" data-id="${m.id}" title="${m.watched?text('unwatched'):text('watched')}" aria-label="${m.watched?text('unwatched'):text('watched')}">${m.watched?'×':'✓'}</button></div></article>`).join('')+`<button class="add-movie-tile" type="button" data-add-movie aria-label="${text('addTile')}" title="${text('addTile')}">+</button>`;}
+    const quoteTranslations=[
+      'Fájdalom? Az a gyengébb embereknek való. Ettől a naptól kezdve nem ismerek fájdalmat.',
+      'Te, a bátrak legendás legbátrabbika, hátralévő napjaidat teljes rettegésben fogod leélni...',
+      'Ez a világ az enyém, hogy uralkodjak rajta, és csakis az enyém. Ezek a… hüllők nem kaphatják meg.',
+      'Drága, drága Valeria. Jobban fogsz hiányozni, mint azt bárki is el tudná képzelni… de mindig közel tartalak magamhoz.',
+      'Doom senkinek sem a második választása.',
+      'Most pedig rettegjen az emberiség, mert Doctor Doom határtalan hatalomra tett szert. Akkorára, amellyel még Galactust is kihívhatja!',
+      'Van Dyne kisasszony, nem vagyok holmi közönséges bűnöző, akit el lehet terelni a fecsegésével.',
+      'Isten voltam, Valeria. Úgy találtam... méltatlan hozzám.',
+      'Úgy tűnik... ez nem igaz.',
+      'Igen, a fenébe is, most pedig halj meg!',
+      'Megtagadlak, Halál! Victor von Doom nem halhat meg!',
+      'Doctor Doom nem könyörög.',
+      'Valami közeleg. Valami, amit talán nem tudunk megállítani. Mielőtt ez a nap véget ér, elképzelhetetlen döntéssel kell szembenéznünk.',
+      'Mindannyian lopott életeket éltetek. Most vissza kell adnotok őket.',
+      'A pokol nekem engedelmeskedik! Mert én vagyok DOOM!'
+    ];
+    function renderQuotes(){const grid=$('#quotesGrid');grid.replaceChildren();quotes.forEach(({q,src,hu,en,url},index)=>{const card=document.createElement('article');card.className='quote-card';const block=document.createElement('blockquote');block.textContent=lang==='hu'?quoteTranslations[index]:q;const source=document.createElement('div');source.className='quote-source';source.textContent=src.replace(' — előzetes / trailer',' — '+(lang==='hu'?'előzetes':'trailer')).replace(' — bemutatott filmrészlet / footage',' — '+(lang==='hu'?'bemutatott filmrészlet':'promotional footage'));const description=document.createElement('p');description.className='quote-description';description.textContent=lang==='hu'?hu:en;const link=document.createElement('a');link.className='quote-link';link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.textContent=text('sourceLink');card.append(block,source,description,link);grid.append(card)})}
+    function setLanguage(){document.documentElement.lang=lang;document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=text(e.dataset.i18n));document.querySelectorAll('[data-i18n-aria-label]').forEach(e=>e.setAttribute('aria-label',text(e.dataset.i18nAriaLabel)));document.querySelectorAll('[data-i18n-alt]').forEach(e=>e.alt=text(e.dataset.i18nAlt));document.querySelectorAll('[data-lang]').forEach(e=>e.classList.toggle('active',e.dataset.lang===lang)); [['backNav','back'],['homeNav','homeNav'],['quotesNav','quotesNav'],['settingsNav','settings'],['presetNav','presets']].forEach(([id,key])=>{$('#'+id).setAttribute('aria-label',text(key));$('#'+id).title=text(key)}); $('#formHeading').textContent=$('#editingId').value?text('editHeading'):text('addHeading'); $('#submitBtn').textContent=$('#editingId').value?text('save'):text('add');if(!$('#saveListError').hidden)$('#saveListError').textContent=text('snapshotError');try{localStorage.setItem(KEY+'-lang',lang)}catch{}render();renderQuotes();refreshPresets().catch(()=>{});}
+    function render(){const list=$('#movieList'); const n=movies.length; $('#counter').textContent=n+' '+(n===1?text('count'):text('countPlural')); $('#allMoviesNames').innerHTML=movies.map(m=>`<li>${esc(m.title)}</li>`).join(''); list.innerHTML=movies.map(m=>`<article class="movie ${m.watched?'watched':''}" draggable="true" data-id="${m.id}"><div class="drag" title="${text('drag')}">☷</div><img class="movie-poster" src="${m.poster||''}" alt="" onerror="this.style.visibility='hidden'"><div class="movie-info"><h3 class="movie-title">${esc(m.title)}</h3></div><div class="actions"><button class="icon-btn edit" data-id="${m.id}" title="${text('edit')}" aria-label="${text('edit')}">✎</button><button class="icon-btn delete" data-id="${m.id}" title="${text('delete')}" aria-label="${text('delete')}">−</button><button class="icon-btn watch" data-id="${m.id}" title="${m.watched?text('unwatched'):text('watched')}" aria-label="${m.watched?text('unwatched'):text('watched')}">${m.watched?'×':'✓'}</button></div></article>`).join('')+`<button class="add-movie-tile" type="button" data-add-movie aria-label="${text('addTile')}" title="${text('addTile')}">+</button>`;}
     function closeMovieDialog(){$('#movieDialog').hidden=true} function resetForm(){ $('#movieForm').reset();$('#editingId').value='';pendingPoster='';$('#preview').innerHTML=`<span>${text('posterHint')}</span>`;$('#cancelBtn').hidden=false;closeMovieDialog();setLanguage();} function openAddDialog(){resetForm();$('#movieDialog').hidden=false;$('#title').focus();}
     async function compactPoster(file,limit=650){const raw=await new Promise((ok,bad)=>{const r=new FileReader;r.onload=()=>ok(r.result);r.onerror=bad;r.readAsDataURL(file)});const image=new Image();await new Promise((ok,bad)=>{image.onload=ok;image.onerror=bad;image.src=raw});const longest=Math.max(image.naturalWidth,image.naturalHeight),scale=Math.min(1,limit/longest),canvas=document.createElement('canvas');canvas.width=Math.round(image.naturalWidth*scale);canvas.height=Math.round(image.naturalHeight*scale);canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);return canvas.toDataURL('image/jpeg',.8)}
     $('#poster').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{pendingPoster=await compactPoster(f);$('#preview').innerHTML=`<img src="${pendingPoster}" alt="">`}catch{pendingPoster='';$('#preview').innerHTML=`<span>${text('posterHint')}</span>`}});
