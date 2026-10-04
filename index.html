@@ -187,18 +187,19 @@
 .achievement-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}.achievement-card{border:1px solid var(--silver);border-radius:24px;padding:24px;background:#101b16e8}.achievement-card.complete{border-color:#d9bd71;box-shadow:0 0 22px #d9bd7125}.achievement-card h2{font-size:1.15rem;line-height:1.5;margin:10px 0}.achievement-card p,.achievement-card li{line-height:1.6}.achievement-star{font-size:2rem;color:#89928c}.complete .achievement-star{color:#efd280}.achievement-card progress{width:100%;height:10px;accent-color:#d9bd71}.achievement-card summary{cursor:pointer;margin-top:14px}.achievement-card ul{padding-left:22px}.achievement-status{font-weight:bold;color:#d9bd71}@media(max-width:760px){.achievement-grid{grid-template-columns:1fr}}
 
 /* Balanced achievement cards, with wrapping titles and aligned progress. */
-.achievement-grid{grid-auto-rows:1fr;align-items:stretch}
-.achievement-card{display:flex;flex-direction:column;min-width:0;height:100%;box-sizing:border-box}
+.achievement-grid{grid-auto-rows:auto;align-items:start}
+.achievement-card{display:block;min-width:0;height:auto;box-sizing:border-box}
+.achievement-main{display:flex;flex-direction:column;min-height:350px}
 .achievement-star{display:block;line-height:1.5;flex-shrink:0}
 .achievement-card h2{min-height:4.5em;overflow-wrap:anywhere;text-wrap:balance}
-.achievement-card>p:not(.achievement-status){flex:1;margin:0 0 18px;overflow-wrap:anywhere}
+.achievement-main>p:not(.achievement-status){flex:1;margin:0 0 18px;overflow-wrap:anywhere}
 .achievement-card .achievement-status{margin:0 0 12px}
 .achievement-card progress{display:block;flex-shrink:0}
 .achievement-card details{margin-top:4px}
 .achievement-card ul{margin-bottom:0;overflow-wrap:anywhere}
 .achievement-card ul.achievement-films-long{columns:2;column-gap:28px}
 .achievement-card li{break-inside:avoid;margin-bottom:8px}
-@media(max-width:760px){.achievement-grid{grid-auto-rows:auto}.achievement-card h2{min-height:0}.achievement-card>p:not(.achievement-status){flex:auto}}
+@media(max-width:760px){.achievement-grid{grid-auto-rows:auto}.achievement-card h2{min-height:0}.achievement-main>p:not(.achievement-status){flex:auto}}
 @media(max-width:460px){.achievement-card ul.achievement-films-long{columns:1}}
 </style>
 </head>
@@ -535,7 +536,7 @@
     $('#importFile').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader;r.onload=()=>{try{const d=JSON.parse(r.result),arr=Array.isArray(d)?d:d.movies;if(!Array.isArray(arr))throw 0;movies=arr.filter(x=>x&&typeof x.title==='string').map(x=>({id:x.id||crypto.randomUUID(),title:x.title,poster:x.poster||'',watched:!!x.watched,rating:normalizedRating(x.rating)}));save();resetForm();render();toast(text('imported'))}catch{toast(text('badImport'))}};r.readAsText(f);e.target.value=''});
 
 
-    Object.assign(T.hu,{achievements:'Achievementek',achievementIntro:'Az aktuális listád megnézett filmjei alapján. A haladás a listával együtt megmarad.',achievementComplete:'Teljesítve',achievementLocked:'Folyamatban',achievementDetails:'Szükséges filmek',achievementMissing:'Nincs a listában',achievementEmpty:'Válassz filmeket a listádhoz.',achievementEarned:'teljesített achievement'});
+    Object.assign(T.hu,{achievements:'Eredmények',achievementIntro:'Az aktuális listád megnézett filmjei alapján. A haladás a listával együtt megmarad.',achievementComplete:'Teljesítve',achievementLocked:'Folyamatban',achievementDetails:'Szükséges filmek',achievementMissing:'Nincs a listában',achievementEmpty:'Válassz filmeket a listádhoz.',achievementEarned:'teljesített eredmény'});
     Object.assign(T.en,{achievements:'Achievements',achievementIntro:'Based on watched films in your current list. Progress is saved with the list.',achievementComplete:'Completed',achievementLocked:'In progress',achievementDetails:'Required films',achievementMissing:'Not in your list',achievementEmpty:'Add films to your list.',achievementEarned:'achievements completed'});
     function normalizeFilmTitle(value){return String(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(?:19|20)\d{2}\b/g,'').replace(/[^a-z0-9]/g,'')}
     const achievementFilms={};
@@ -581,26 +582,29 @@
     const achievementDefinitions=[
 {"title": "Mankind has always feared what it doesn't understand", "hu": "Nézd meg az eredeti X-Men trilógiát.", "en": "Watch the original X-Men trilogy.", "ids": ["x1", "x2", "x3"]},
 {"title": "Mutation: it is the key to our evolution", "hu": "Nézd meg az összes X-Men filmet, a Farkas-filmekkel és a Logannel együtt.", "en": "Watch all X-Men films, including the Wolverine films and Logan.", "ids": ["x1", "x2", "x3", "xo", "xf", "w", "xd", "xa", "logan", "xp"]},
-{"title": "I am Iron Man", "hu": "Nézd meg az Iron Mant.", "en": "Watch Iron Man.", "ids": ["im"]},
+{"title": "I am Iron Man", "hu": "Nézd meg A Vasember című filmet.", "en": "Watch Iron Man.", "ids": ["im"]},
 {"title": "A Bosszúállók alapítótagja", "hu": "Nézd meg a Vasember, A hihetetlen Hulk, Thor, Amerika Kapitány: Az első bosszúálló és Bosszúállók filmeket.", "en": "Watch Iron Man, The Incredible Hulk, Thor, Captain America: The First Avenger and The Avengers.", "ids": ["im", "hulk", "thor", "cap", "av"]},
 {"title": "Avengers, Assemble", "hu": "Nézd meg a négy Bosszúállók-filmet a Végjátékig.", "en": "Watch all four Avengers films through Endgame.", "ids": ["av", "av2", "av3", "av4"]},
-{"title": "I am inevitable", "hu": "Nézd meg az Infinity Saga összes kiválasztott filmjét, az Iron Mantől a Végjátékig.", "en": "Watch every selected Infinity Saga film from Iron Man through Endgame.", "ids": "infinity"},
+{"title": "I am inevitable", "hu": "Nézd meg a Végtelen-saga összes kiválasztott filmjét, A Vasembertől a Végjátékig.", "en": "Watch every selected Infinity Saga film from Iron Man through Endgame.", "ids": "infinity"},
 {"title": "Peter 1, Peter 2, Peter 3", "hu": "Nézd meg a Pókember: Nincs hazaút filmet.", "en": "Watch Spider-Man: No Way Home.", "ids": ["nwh"]},
 {"title": "I am Marvel Jesus", "hu": "Nézd meg a Deadpool és Rozsomák filmet.", "en": "Watch Deadpool & Wolverine.", "ids": ["dpw"]},
-{"title": "I don't love you, I don't even know you", "hu": "Nézd meg a Spider-Man: Brand New Day filmet.", "en": "Watch Spider-Man: Brand New Day.", "ids": ["bnd"]},
+{"title": "I don't love you, I don't even know you", "hu": "Nézd meg a Pókember: Vadonatúj nap című filmet.", "en": "Watch Spider-Man: Brand New Day.", "ids": ["bnd"]},
 {"title": "All Roads Lead To Doom", "hu": "Nézd meg az aktuális listád összes filmjét.", "en": "Watch every film in your current list.", "ids": "all"},
     ];
+    const achievementTitles=[["Az emberiség mindig félt attól, amit nem ért.", "Mankind has always feared what it doesn't understand"], ["A mutáció az evolúciónk kulcsa.", "Mutation: it is the key to our evolution"], ["Én vagyok Vasember.", "I am Iron Man"], ["A Bosszúállók alapítótagja", "Founding member of the Avengers"], ["Bosszúállók, gyülekező!", "Avengers, Assemble"], ["Én vagyok az elkerülhetetlen.", "I am inevitable"], ["Peter 1, Peter 2, Peter 3", "Peter 1, Peter 2, Peter 3"], ["Én vagyok a Marvel Jézusa.", "I am Marvel Jesus"], ["Nem szeretlek, nem is ismerlek.", "I don't love you, I don't even know you"], ["Minden út Doomhoz vezet.", "All Roads Lead To Doom"]];
+    achievementDefinitions.forEach((def,i)=>{def.titleHu=achievementTitles[i][0];def.titleEn=achievementTitles[i][1]});
+    function achievementTitle(def){return lang==='hu'?def.titleHu:def.titleEn}
     function achievementProgress(def,list=movies){
       const entries=list.map(movie=>({movie,key:identifyAchievementFilm(movie)}));
       const selected=def.ids==='all'?entries:def.ids==='infinity'?entries.filter(e=>infinityFilmIds.includes(e.key)):null;
-      const requirements=selected?selected.map(e=>({title:e.movie.title,present:true,done:!!e.movie.watched})):def.ids.map(id=>{const found=entries.filter(e=>e.key===id);return {title:achievementFilms[id][lang],present:found.length>0,done:found.some(e=>e.movie.watched)}});
+      const requirements=selected?selected.map(e=>({title:e.key?achievementFilms[e.key][lang]:e.movie.title,present:true,done:!!e.movie.watched})):def.ids.map(id=>{const found=entries.filter(e=>e.key===id);return {title:achievementFilms[id][lang],present:found.length>0,done:found.some(e=>e.movie.watched)}});
       const done=requirements.filter(r=>r.done).length,total=requirements.length;
       return {requirements,done,total,complete:total>0&&done===total};
     }
     function renderAchievements(){
       const results=achievementDefinitions.map(def=>({def,...achievementProgress(def)}));
       $('#achievementSummary').textContent=results.filter(r=>r.complete).length+' / '+results.length+' '+text('achievementEarned');
-      $('#achievementGrid').innerHTML=results.map(r=>`<article class="achievement-card ${r.complete?'complete':''}"><span class="achievement-star" aria-hidden="true">${r.complete?'★':'☆'}</span><h2>${esc(r.def.title)}</h2><p>${esc(r.def[lang])}</p><p class="achievement-status">${text(r.complete?'achievementComplete':'achievementLocked')} · ${r.done} / ${r.total}</p><progress max="${r.total||1}" value="${r.done}" aria-label="${esc(r.def.title)}"></progress><details><summary>${text('achievementDetails')}</summary>${r.total?`<ul class="${r.total>5?'achievement-films-long':''}">${r.requirements.map(f=>`<li>${f.done?'✓':'○'} ${esc(f.title)}${f.present?'':' — '+text('achievementMissing')}</li>`).join('')}</ul>`:`<p>${text('achievementEmpty')}</p>`}</details></article>`).join('');
+      $('#achievementGrid').innerHTML=results.map(r=>`<article class="achievement-card ${r.complete?'complete':''}"><div class="achievement-main"><span class="achievement-star" aria-hidden="true">${r.complete?'★':'☆'}</span><h2>${esc(achievementTitle(r.def))}</h2><p>${esc(r.def[lang])}</p><p class="achievement-status">${text(r.complete?'achievementComplete':'achievementLocked')} · ${r.done} / ${r.total}</p><progress max="${r.total||1}" value="${r.done}" aria-label="${esc(achievementTitle(r.def))}"></progress></div><details><summary>${text('achievementDetails')}</summary>${r.total?`<ul class="${r.total>5?'achievement-films-long':''}">${r.requirements.map(f=>`<li>${f.done?'✓':'○'} ${esc(f.title)}${f.present?'':' — '+text('achievementMissing')}</li>`).join('')}</ul>`:`<p>${text('achievementEmpty')}</p>`}</details></article>`).join('');
     }
 
     const pageHistory=['home'];
