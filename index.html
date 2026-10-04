@@ -185,6 +185,21 @@
     html[data-theme="latveria"] .palette-option.active{border-color:#AB1E22;box-shadow:0 0 0 2px #24763A}
   
 .achievement-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}.achievement-card{border:1px solid var(--silver);border-radius:24px;padding:24px;background:#101b16e8}.achievement-card.complete{border-color:#d9bd71;box-shadow:0 0 22px #d9bd7125}.achievement-card h2{font-size:1.15rem;line-height:1.5;margin:10px 0}.achievement-card p,.achievement-card li{line-height:1.6}.achievement-star{font-size:2rem;color:#89928c}.complete .achievement-star{color:#efd280}.achievement-card progress{width:100%;height:10px;accent-color:#d9bd71}.achievement-card summary{cursor:pointer;margin-top:14px}.achievement-card ul{padding-left:22px}.achievement-status{font-weight:bold;color:#d9bd71}@media(max-width:760px){.achievement-grid{grid-template-columns:1fr}}
+
+/* Balanced achievement cards, with wrapping titles and aligned progress. */
+.achievement-grid{grid-auto-rows:1fr;align-items:stretch}
+.achievement-card{display:flex;flex-direction:column;min-width:0;height:100%;box-sizing:border-box}
+.achievement-star{display:block;line-height:1.5;flex-shrink:0}
+.achievement-card h2{min-height:4.5em;overflow-wrap:anywhere;text-wrap:balance}
+.achievement-card>p:not(.achievement-status){flex:1;margin:0 0 18px;overflow-wrap:anywhere}
+.achievement-card .achievement-status{margin:0 0 12px}
+.achievement-card progress{display:block;flex-shrink:0}
+.achievement-card details{margin-top:4px}
+.achievement-card ul{margin-bottom:0;overflow-wrap:anywhere}
+.achievement-card ul.achievement-films-long{columns:2;column-gap:28px}
+.achievement-card li{break-inside:avoid;margin-bottom:8px}
+@media(max-width:760px){.achievement-grid{grid-auto-rows:auto}.achievement-card h2{min-height:0}.achievement-card>p:not(.achievement-status){flex:auto}}
+@media(max-width:460px){.achievement-card ul.achievement-films-long{columns:1}}
 </style>
 </head>
 <body>
@@ -585,7 +600,7 @@
     function renderAchievements(){
       const results=achievementDefinitions.map(def=>({def,...achievementProgress(def)}));
       $('#achievementSummary').textContent=results.filter(r=>r.complete).length+' / '+results.length+' '+text('achievementEarned');
-      $('#achievementGrid').innerHTML=results.map(r=>`<article class="achievement-card ${r.complete?'complete':''}"><span class="achievement-star" aria-hidden="true">${r.complete?'★':'☆'}</span><h2>${esc(r.def.title)}</h2><p>${esc(r.def[lang])}</p><p class="achievement-status">${text(r.complete?'achievementComplete':'achievementLocked')} · ${r.done} / ${r.total}</p><progress max="${r.total||1}" value="${r.done}" aria-label="${esc(r.def.title)}"></progress><details><summary>${text('achievementDetails')}</summary>${r.total?`<ul>${r.requirements.map(f=>`<li>${f.done?'✓':'○'} ${esc(f.title)}${f.present?'':' — '+text('achievementMissing')}</li>`).join('')}</ul>`:`<p>${text('achievementEmpty')}</p>`}</details></article>`).join('');
+      $('#achievementGrid').innerHTML=results.map(r=>`<article class="achievement-card ${r.complete?'complete':''}"><span class="achievement-star" aria-hidden="true">${r.complete?'★':'☆'}</span><h2>${esc(r.def.title)}</h2><p>${esc(r.def[lang])}</p><p class="achievement-status">${text(r.complete?'achievementComplete':'achievementLocked')} · ${r.done} / ${r.total}</p><progress max="${r.total||1}" value="${r.done}" aria-label="${esc(r.def.title)}"></progress><details><summary>${text('achievementDetails')}</summary>${r.total?`<ul class="${r.total>5?'achievement-films-long':''}">${r.requirements.map(f=>`<li>${f.done?'✓':'○'} ${esc(f.title)}${f.present?'':' — '+text('achievementMissing')}</li>`).join('')}</ul>`:`<p>${text('achievementEmpty')}</p>`}</details></article>`).join('');
     }
 
     const pageHistory=['home'];
