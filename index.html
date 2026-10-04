@@ -621,7 +621,7 @@ html{scrollbar-gutter:stable}
     function identifyAchievementFilm(movie){const title=normalizeFilmTitle(movie.title);return Object.keys(achievementFilms).find(id=>achievementFilms[id].aliases.includes(title))}
     const achievementDefinitions=[
 {"title": "Mankind has always feared what it doesn't understand", "hu": "Nézd meg az eredeti X-Men trilógiát.", "en": "Watch the original X-Men trilogy.", "ids": ["x1", "x2", "x3"]},
-{"title": "Mutation: it is the key to our evolution", "hu": "Nézd meg az összes X-Men filmet, a Farkas-filmekkel és a Logannel együtt.", "en": "Watch all X-Men films, including the Wolverine films and Logan.", "ids": ["x1", "x2", "x3", "xo", "xf", "w", "xd", "xa", "logan", "xp"]},
+{"title": "Mutation: it is the key to our evolution", "hu": "Nézd meg a listádban szereplő összes X-Men- és Farkas-filmet, a Logant is beleértve. Csak a listádhoz hozzáadott filmek számítanak.", "en": "Watch every X-Men and Wolverine film in your list, including Logan. Only films added to your list count.", "ids": ["x1", "x2", "x3", "xo", "xf", "w", "xd", "xa", "logan", "xp"], "selectedOnly": true},
 {"title": "I am Iron Man", "hu": "Nézd meg A Vasember című filmet.", "en": "Watch Iron Man.", "ids": ["im"]},
 {"title": "A Bosszúállók alapítótagja", "hu": "Nézd meg a Vasember, A hihetetlen Hulk, Thor, Amerika Kapitány: Az első bosszúálló és Bosszúállók filmeket.", "en": "Watch Iron Man, The Incredible Hulk, Thor, Captain America: The First Avenger and The Avengers.", "ids": ["im", "hulk", "thor", "cap", "av"]},
 {"title": "Avengers, Assemble", "hu": "Nézd meg a négy Bosszúállók-filmet a Végjátékig.", "en": "Watch all four Avengers films through Endgame.", "ids": ["av", "av2", "av3", "av4"]},
@@ -636,7 +636,7 @@ html{scrollbar-gutter:stable}
     function achievementTitle(def){return lang==='hu'?def.titleHu:def.titleEn}
     function achievementProgress(def,list=movies){
       const entries=list.map(movie=>({movie,key:identifyAchievementFilm(movie)}));
-      const selected=def.ids==='all'?entries:def.ids==='infinity'?entries.filter(e=>infinityFilmIds.includes(e.key)):null;
+      const selected=def.ids==='all'?entries:def.ids==='infinity'?entries.filter(e=>infinityFilmIds.includes(e.key)):def.selectedOnly?entries.filter(e=>def.ids.includes(e.key)):null;
       const requirements=selected?selected.map(e=>({title:e.key?achievementFilms[e.key][lang]:e.movie.title,present:true,done:!!e.movie.watched})):def.ids.map(id=>{const found=entries.filter(e=>e.key===id);return {title:achievementFilms[id][lang],present:found.length>0,done:found.some(e=>e.movie.watched)}});
       const done=requirements.filter(r=>r.done).length,total=requirements.length;
       return {requirements,done,total,complete:total>0&&done===total};
