@@ -183,7 +183,9 @@
     html[data-theme="latveria"] .btn.danger{background:linear-gradient(#AB1E22,#4D1113);color:#fff}
     html[data-theme="latveria"] .counter,html[data-theme="latveria"] .eyebrow,html[data-theme="latveria"] .quote-mark,html[data-theme="latveria"] .preset-emblem{color:#70CB86}
     html[data-theme="latveria"] .palette-option.active{border-color:#AB1E22;box-shadow:0 0 0 2px #24763A}
-  </style>
+  
+.achievement-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}.achievement-card{border:1px solid var(--silver);border-radius:24px;padding:24px;background:#101b16e8}.achievement-card.complete{border-color:#d9bd71;box-shadow:0 0 22px #d9bd7125}.achievement-card h2{font-size:1.15rem;line-height:1.5;margin:10px 0}.achievement-card p,.achievement-card li{line-height:1.6}.achievement-star{font-size:2rem;color:#89928c}.complete .achievement-star{color:#efd280}.achievement-card progress{width:100%;height:10px;accent-color:#d9bd71}.achievement-card summary{cursor:pointer;margin-top:14px}.achievement-card ul{padding-left:22px}.achievement-status{font-weight:bold;color:#d9bd71}@media(max-width:760px){.achievement-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
   <div class="shell">
@@ -192,13 +194,15 @@
         <button class="nav-icon back-nav" id="backNav" type="button" aria-label="Vissza" title="Vissza" disabled><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m14 5-7 7 7 7M7 12h14"/></svg></button>
         <button class="nav-icon active" id="homeNav" type="button" aria-label="Főoldal" title="Főoldal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-7 9 7M5 10v10h14V10M9 20v-6h6v6"/></svg></button>
         <button class="nav-icon" id="newsNav" type="button" aria-label="Újdonságok" title="Újdonságok"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h4v4H7zM14 8h3M14 11h3M7 16h10"/></svg></button>
+<button class="nav-icon" id="achievementsNav" type="button" aria-label="Achievementek" title="Achievementek"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1z"/></svg></button>
         <button class="nav-icon" id="quotesNav" type="button" aria-label="Doctor Doom idézetek" title="Doctor Doom idézetek"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6zM15 3v5h4M9 12h7M9 16h7"/></svg></button>
         <button class="nav-icon preset-trigger" id="presetNav" type="button" aria-label="Presetek" title="Presetek" aria-expanded="false" hidden><span aria-hidden="true">+</span></button>
       </div>
       <div class="nav-title" id="navTitle" hidden>All Roads Lead to Doom</div>
       <button class="nav-icon" id="settingsNav" type="button" aria-label="Beállítások" title="Beállítások" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="m10 2-.5 2.1-2 .8-1.8-1.1-2 2 1.1 1.8-.8 2L2 10v4l2.1.5.8 2-1.1 1.8 2 2 1.8-1.1 2 .8L10 22h4l.5-2.1 2-.8 1.8 1.1 2-2-1.1-1.8.8-2L22 14v-4l-2.1-.5-.8-2 1.1-1.8-2-2-1.8 1.1-2-.8L14 2z"/></svg></button>
     </nav>
-    <section class="page news-page" id="newsPage" hidden>
+    <section class="page news-page" id="achievementsPage" hidden><div class="news-hero"><span class="news-kicker">★ DOOMSDAY MARATHON</span><h1 data-i18n="achievements">Achievementek</h1><p data-i18n="achievementIntro">Az aktuális listád megnézett filmjei alapján. A haladás a listával együtt megmarad.</p><p id="achievementSummary" aria-live="polite"></p></div><div id="achievementGrid" class="achievement-grid"></div></section>
+<section class="page news-page" id="newsPage" hidden>
       <div class="news-hero">
         <span class="news-kicker" data-i18n="newsKicker">A DOOM ÚJ KORSZAKA · V2</span>
         <h1>DOOMSDAY MARATHON V2</h1>
@@ -493,11 +497,11 @@
       'A pokol nekem engedelmeskedik! Mert én vagyok DOOM!'
     ];
     function renderQuotes(){const grid=$('#quotesGrid');grid.replaceChildren();quotes.forEach(({q,src,hu,en,url},index)=>{const card=document.createElement('article');card.className='quote-card';const block=document.createElement('blockquote');block.textContent=lang==='hu'?quoteTranslations[index]:q;const source=document.createElement('div');source.className='quote-source';source.textContent=src.replace(' — előzetes / trailer',' — '+(lang==='hu'?'előzetes':'trailer')).replace(' — bemutatott filmrészlet / footage',' — '+(lang==='hu'?'bemutatott filmrészlet':'promotional footage'));const description=document.createElement('p');description.className='quote-description';description.textContent=lang==='hu'?hu:en;const link=document.createElement('a');link.className='quote-link';link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.textContent=text('sourceLink');card.append(block,source,description,link);grid.append(card)})}
-    function setLanguage(){document.documentElement.lang=lang;document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=text(e.dataset.i18n));document.querySelectorAll('[data-i18n-aria-label]').forEach(e=>e.setAttribute('aria-label',text(e.dataset.i18nAriaLabel)));document.querySelectorAll('[data-i18n-alt]').forEach(e=>e.alt=text(e.dataset.i18nAlt));document.querySelectorAll('[data-lang]').forEach(e=>e.classList.toggle('active',e.dataset.lang===lang)); [['backNav','back'],['homeNav','homeNav'],['newsNav','newsNav'],['quotesNav','quotesNav'],['settingsNav','settings'],['presetNav','presets']].forEach(([id,key])=>{$('#'+id).setAttribute('aria-label',text(key));$('#'+id).title=text(key)}); $('#formHeading').textContent=$('#editingId').value?text('editHeading'):text('addHeading'); $('#submitBtn').textContent=$('#editingId').value?text('save'):text('add');if(!$('#saveListError').hidden)$('#saveListError').textContent=text('snapshotError');try{localStorage.setItem(KEY+'-lang',lang)}catch{}render();renderQuotes();refreshPresets().catch(()=>{});}
+    function setLanguage(){document.documentElement.lang=lang;document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=text(e.dataset.i18n));document.querySelectorAll('[data-i18n-aria-label]').forEach(e=>e.setAttribute('aria-label',text(e.dataset.i18nAriaLabel)));document.querySelectorAll('[data-i18n-alt]').forEach(e=>e.alt=text(e.dataset.i18nAlt));document.querySelectorAll('[data-lang]').forEach(e=>e.classList.toggle('active',e.dataset.lang===lang)); [['backNav','back'],['homeNav','homeNav'],['newsNav','newsNav'],['achievementsNav','achievements'],['quotesNav','quotesNav'],['settingsNav','settings'],['presetNav','presets']].forEach(([id,key])=>{$('#'+id).setAttribute('aria-label',text(key));$('#'+id).title=text(key)}); $('#formHeading').textContent=$('#editingId').value?text('editHeading'):text('addHeading'); $('#submitBtn').textContent=$('#editingId').value?text('save'):text('add');if(!$('#saveListError').hidden)$('#saveListError').textContent=text('snapshotError');try{localStorage.setItem(KEY+'-lang',lang)}catch{}render();renderQuotes();refreshPresets().catch(()=>{});}
     let expandedRatingId=null;
     function normalizedRating(value){const number=Number(value);return Number.isFinite(number)?Math.min(5,Math.max(0,Math.round(number*2)/2)):0}
     function ratingMarkup(m){const value=normalizedRating(m.rating),label=text('rating')+': '+new Intl.NumberFormat(lang,{minimumFractionDigits:1,maximumFractionDigits:1}).format(value)+' '+text('ratingOf');return `<div class="rating-preview">${value?`★ ${new Intl.NumberFormat(lang,{minimumFractionDigits:1,maximumFractionDigits:1}).format(value)}/5`:text('ratingPrompt')}</div><div class="movie-rating"><div class="rating-stars" role="slider" tabindex="0" draggable="false" data-rating-id="${esc(m.id)}" aria-label="${text('rating')}" aria-valuemin="0" aria-valuemax="5" aria-valuenow="${value}" aria-valuetext="${esc(label)}" title="${esc(label)}">${Array.from({length:5},(_,i)=>`<span class="rating-star" aria-hidden="true" style="--fill:${Math.min(100,Math.max(0,(value-i)*100))}%">★</span>`).join('')}</div><span class="rating-value">${new Intl.NumberFormat(lang,{minimumFractionDigits:1,maximumFractionDigits:1}).format(value)}/5</span>${value?`<button class="rating-clear" type="button" data-rating-clear="${esc(m.id)}" aria-label="${text('ratingClear')}" title="${text('ratingClear')}">×</button>`:''}</div>`}
-    function render(){const list=$('#movieList'); const n=movies.length; $('#counter').textContent=n+' '+(n===1?text('count'):text('countPlural')); $('#allMoviesNames').innerHTML=movies.map(m=>`<li>${esc(m.title)}</li>`).join(''); list.innerHTML=movies.map(m=>`<article class="movie ${String(m.id)===expandedRatingId?'rating-open':''} ${m.watched?'watched':''}" draggable="true" tabindex="0" aria-label="${esc(m.title)}. ${text('ratingPrompt')}" data-id="${esc(m.id)}"><div class="drag" title="${text('drag')}">☷</div><img class="movie-poster" src="${m.poster||''}" alt="" onerror="this.style.visibility='hidden'"><div class="movie-info"><h3 class="movie-title">${esc(m.title)}</h3></div>${ratingMarkup(m)}<div class="actions"><button class="icon-btn edit" data-id="${esc(m.id)}" title="${text('edit')}" aria-label="${text('edit')}">✎</button><button class="icon-btn delete" data-id="${esc(m.id)}" title="${text('delete')}" aria-label="${text('delete')}">−</button><button class="icon-btn watch" data-id="${esc(m.id)}" title="${m.watched?text('unwatched'):text('watched')}" aria-label="${m.watched?text('unwatched'):text('watched')}">${m.watched?'×':'✓'}</button></div></article>`).join('')+`<button class="add-movie-tile" type="button" data-add-movie aria-label="${text('addTile')}" title="${text('addTile')}">+</button>`}
+    function render(){renderAchievements();const list=$('#movieList'); const n=movies.length; $('#counter').textContent=n+' '+(n===1?text('count'):text('countPlural')); $('#allMoviesNames').innerHTML=movies.map(m=>`<li>${esc(m.title)}</li>`).join(''); list.innerHTML=movies.map(m=>`<article class="movie ${String(m.id)===expandedRatingId?'rating-open':''} ${m.watched?'watched':''}" draggable="true" tabindex="0" aria-label="${esc(m.title)}. ${text('ratingPrompt')}" data-id="${esc(m.id)}"><div class="drag" title="${text('drag')}">☷</div><img class="movie-poster" src="${m.poster||''}" alt="" onerror="this.style.visibility='hidden'"><div class="movie-info"><h3 class="movie-title">${esc(m.title)}</h3></div>${ratingMarkup(m)}<div class="actions"><button class="icon-btn edit" data-id="${esc(m.id)}" title="${text('edit')}" aria-label="${text('edit')}">✎</button><button class="icon-btn delete" data-id="${esc(m.id)}" title="${text('delete')}" aria-label="${text('delete')}">−</button><button class="icon-btn watch" data-id="${esc(m.id)}" title="${m.watched?text('unwatched'):text('watched')}" aria-label="${m.watched?text('unwatched'):text('watched')}">${m.watched?'×':'✓'}</button></div></article>`).join('')+`<button class="add-movie-tile" type="button" data-add-movie aria-label="${text('addTile')}" title="${text('addTile')}">+</button>`}
     function updateRating(id,value){const movie=movies.find(m=>String(m.id)===String(id));if(!movie)return;movie.rating=normalizedRating(value);save();render();$('#movieList').querySelector('.movie.rating-open .rating-stars')?.focus();}
     function toggleMovieRating(card){expandedRatingId=expandedRatingId===card.dataset.id?null:card.dataset.id;$('#movieList').querySelectorAll('.movie').forEach(item=>item.classList.toggle('rating-open',item.dataset.id===expandedRatingId));if(expandedRatingId)card.querySelector('.rating-stars')?.focus();else card.focus()}
     $('#movieList').addEventListener('click',e=>{const card=e.target.closest('.movie');if(card&&!e.target.closest('.actions,.movie-rating,.drag'))toggleMovieRating(card)});
@@ -515,22 +519,93 @@
     $('#exportBtn').onclick=()=>{const a=document.createElement('a'),blob=new Blob([JSON.stringify({version:1,movies},null,2)],{type:'application/json'});a.href=URL.createObjectURL(blob);a.download='doomsday-marathon.json';a.click();URL.revokeObjectURL(a.href)};
     $('#importFile').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader;r.onload=()=>{try{const d=JSON.parse(r.result),arr=Array.isArray(d)?d:d.movies;if(!Array.isArray(arr))throw 0;movies=arr.filter(x=>x&&typeof x.title==='string').map(x=>({id:x.id||crypto.randomUUID(),title:x.title,poster:x.poster||'',watched:!!x.watched,rating:normalizedRating(x.rating)}));save();resetForm();render();toast(text('imported'))}catch{toast(text('badImport'))}};r.readAsText(f);e.target.value=''});
 
+
+    Object.assign(T.hu,{achievements:'Achievementek',achievementIntro:'Az aktuális listád megnézett filmjei alapján. A haladás a listával együtt megmarad.',achievementComplete:'Teljesítve',achievementLocked:'Folyamatban',achievementDetails:'Szükséges filmek',achievementMissing:'Nincs a listában',achievementEmpty:'Válassz filmeket a listádhoz.',achievementEarned:'teljesített achievement'});
+    Object.assign(T.en,{achievements:'Achievements',achievementIntro:'Based on watched films in your current list. Progress is saved with the list.',achievementComplete:'Completed',achievementLocked:'In progress',achievementDetails:'Required films',achievementMissing:'Not in your list',achievementEmpty:'Add films to your list.',achievementEarned:'achievements completed'});
+    function normalizeFilmTitle(value){return String(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(?:19|20)\d{2}\b/g,'').replace(/[^a-z0-9]/g,'')}
+    const achievementFilms={};
+    function defineAchievementFilm(id,en,hu,...aliases){achievementFilms[id]={en,hu,aliases:[en,hu,...aliases].map(normalizeFilmTitle)}}
+    defineAchievementFilm("x1","X-Men","X-Men – A kívülállók");
+    defineAchievementFilm("x2","X2","X-Men 2","X2: X-Men United");
+    defineAchievementFilm("x3","X-Men: The Last Stand","X-Men: Az ellenállás vége","X-Men 3");
+    defineAchievementFilm("xo","X-Men Origins: Wolverine","X-Men kezdetek: Farkas");
+    defineAchievementFilm("xf","X-Men: First Class","X-Men: Az elsők");
+    defineAchievementFilm("w","The Wolverine","Farkas","Wolverine");
+    defineAchievementFilm("xd","X-Men: Days of Future Past","X-Men: Az eljövendő múlt napjai");
+    defineAchievementFilm("xa","X-Men: Apocalypse","X-Men: Apokalipszis");
+    defineAchievementFilm("logan","Logan","Logan – Farkas");
+    defineAchievementFilm("xp","Dark Phoenix","X-Men: Sötét Főnix","X-Men: Dark Phoenix");
+    defineAchievementFilm("im","Iron Man","A Vasember","Vasember");
+    defineAchievementFilm("hulk","The Incredible Hulk","A hihetetlen Hulk","Hulk");
+    defineAchievementFilm("im2","Iron Man 2","Vasember 2","A Vasember 2");
+    defineAchievementFilm("thor","Thor","Thor");
+    defineAchievementFilm("cap","Captain America: The First Avenger","Amerika Kapitány: Az első bosszúálló","Cap First Avenger");
+    defineAchievementFilm("av","The Avengers","Bosszúállók","Avengers");
+    defineAchievementFilm("im3","Iron Man 3","Vasember 3","A Vasember 3");
+    defineAchievementFilm("thor2","Thor: The Dark World","Thor: Sötét világ");
+    defineAchievementFilm("cap2","Captain America: The Winter Soldier","Amerika Kapitány: A tél katonája");
+    defineAchievementFilm("gotg","Guardians of the Galaxy","A galaxis őrzői");
+    defineAchievementFilm("av2","Avengers: Age of Ultron","Bosszúállók: Ultron kora");
+    defineAchievementFilm("ant","Ant-Man","A Hangya");
+    defineAchievementFilm("cap3","Captain America: Civil War","Amerika Kapitány: Polgárháború");
+    defineAchievementFilm("strange","Doctor Strange","Doctor Strange");
+    defineAchievementFilm("gotg2","Guardians of the Galaxy Vol. 2","A galaxis őrzői vol. 2","A galaxis őrzői 2");
+    defineAchievementFilm("home","Spider-Man: Homecoming","Pókember: Hazatérés");
+    defineAchievementFilm("thor3","Thor: Ragnarok","Thor: Ragnarök");
+    defineAchievementFilm("bp","Black Panther","Fekete Párduc");
+    defineAchievementFilm("av3","Avengers: Infinity War","Bosszúállók: Végtelen háború");
+    defineAchievementFilm("ant2","Ant-Man and the Wasp","A Hangya és a Darázs");
+    defineAchievementFilm("cm","Captain Marvel","Marvel Kapitány");
+    defineAchievementFilm("av4","Avengers: Endgame","Bosszúállók: Végjáték");
+    defineAchievementFilm("nwh","Spider-Man: No Way Home","Pókember: Nincs hazaút");
+    defineAchievementFilm("dpw","Deadpool & Wolverine","Deadpool és Rozsomák","Deadpool and Wolverine");
+    defineAchievementFilm("bnd","Spider-Man: Brand New Day","Pókember: Vadonatúj nap","Spider-Man BND","Spider-Man: BND");
+
+    const infinityFilmIds=['im','hulk','im2','thor','cap','av','im3','thor2','cap2','gotg','av2','ant','cap3','strange','gotg2','home','thor3','bp','av3','ant2','cm','av4'];
+    function identifyAchievementFilm(movie){const title=normalizeFilmTitle(movie.title);return Object.keys(achievementFilms).find(id=>achievementFilms[id].aliases.includes(title))}
+    const achievementDefinitions=[
+{"title": "Mankind has always feared what it doesn't understand", "hu": "Nézd meg az eredeti X-Men trilógiát.", "en": "Watch the original X-Men trilogy.", "ids": ["x1", "x2", "x3"]},
+{"title": "Mutation: it is the key to our evolution", "hu": "Nézd meg az összes X-Men filmet, a Farkas-filmekkel és a Logannel együtt.", "en": "Watch all X-Men films, including the Wolverine films and Logan.", "ids": ["x1", "x2", "x3", "xo", "xf", "w", "xd", "xa", "logan", "xp"]},
+{"title": "I am Iron Man", "hu": "Nézd meg az Iron Mant.", "en": "Watch Iron Man.", "ids": ["im"]},
+{"title": "A Bosszúállók alapítótagja", "hu": "Nézd meg a Vasember, A hihetetlen Hulk, Thor, Amerika Kapitány: Az első bosszúálló és Bosszúállók filmeket.", "en": "Watch Iron Man, The Incredible Hulk, Thor, Captain America: The First Avenger and The Avengers.", "ids": ["im", "hulk", "thor", "cap", "av"]},
+{"title": "Avengers, Assemble", "hu": "Nézd meg a négy Bosszúállók-filmet a Végjátékig.", "en": "Watch all four Avengers films through Endgame.", "ids": ["av", "av2", "av3", "av4"]},
+{"title": "I am inevitable", "hu": "Nézd meg az Infinity Saga összes kiválasztott filmjét, az Iron Mantől a Végjátékig.", "en": "Watch every selected Infinity Saga film from Iron Man through Endgame.", "ids": "infinity"},
+{"title": "Peter 1, Peter 2, Peter 3", "hu": "Nézd meg a Pókember: Nincs hazaút filmet.", "en": "Watch Spider-Man: No Way Home.", "ids": ["nwh"]},
+{"title": "I am Marvel Jesus", "hu": "Nézd meg a Deadpool és Rozsomák filmet.", "en": "Watch Deadpool & Wolverine.", "ids": ["dpw"]},
+{"title": "I don't love you, I don't even know you", "hu": "Nézd meg a Spider-Man: Brand New Day filmet.", "en": "Watch Spider-Man: Brand New Day.", "ids": ["bnd"]},
+{"title": "All Roads Lead To Doom", "hu": "Nézd meg az aktuális listád összes filmjét.", "en": "Watch every film in your current list.", "ids": "all"},
+    ];
+    function achievementProgress(def,list=movies){
+      const entries=list.map(movie=>({movie,key:identifyAchievementFilm(movie)}));
+      const selected=def.ids==='all'?entries:def.ids==='infinity'?entries.filter(e=>infinityFilmIds.includes(e.key)):null;
+      const requirements=selected?selected.map(e=>({title:e.movie.title,present:true,done:!!e.movie.watched})):def.ids.map(id=>{const found=entries.filter(e=>e.key===id);return {title:achievementFilms[id][lang],present:found.length>0,done:found.some(e=>e.movie.watched)}});
+      const done=requirements.filter(r=>r.done).length,total=requirements.length;
+      return {requirements,done,total,complete:total>0&&done===total};
+    }
+    function renderAchievements(){
+      const results=achievementDefinitions.map(def=>({def,...achievementProgress(def)}));
+      $('#achievementSummary').textContent=results.filter(r=>r.complete).length+' / '+results.length+' '+text('achievementEarned');
+      $('#achievementGrid').innerHTML=results.map(r=>`<article class="achievement-card ${r.complete?'complete':''}"><span class="achievement-star" aria-hidden="true">${r.complete?'★':'☆'}</span><h2>${esc(r.def.title)}</h2><p>${esc(r.def[lang])}</p><p class="achievement-status">${text(r.complete?'achievementComplete':'achievementLocked')} · ${r.done} / ${r.total}</p><progress max="${r.total||1}" value="${r.done}" aria-label="${esc(r.def.title)}"></progress><details><summary>${text('achievementDetails')}</summary>${r.total?`<ul>${r.requirements.map(f=>`<li>${f.done?'✓':'○'} ${esc(f.title)}${f.present?'':' — '+text('achievementMissing')}</li>`).join('')}</ul>`:`<p>${text('achievementEmpty')}</p>`}</details></article>`).join('');
+    }
+
     const pageHistory=['home'];
     function showPage(page,remember=true){
       if(remember&&pageHistory.at(-1)!==page)pageHistory.push(page);
       $('#backNav').disabled=pageHistory.length<2;
-      ['home','news','list','preset','quotes','settings'].forEach(name=>$('#'+name+'Page').hidden=name!==page);
+      ['home','news','achievements','list','preset','quotes','settings'].forEach(name=>$('#'+name+'Page').hidden=name!==page);
       $('#homeNav').classList.toggle('active',page==='home');
       $('#newsNav').classList.toggle('active',page==='news');
+      $('#achievementsNav').classList.toggle('active',page==='achievements');if(page==='achievements')renderAchievements();
       $('#quotesNav').classList.toggle('active',page==='quotes');
       $('#settingsNav').classList.toggle('active',page==='settings');
-      $('#presetNav').hidden=page==='home'||page==='news'||page==='quotes'||page==='settings';$('#navTitle').hidden=page==='home'||page==='news'||page==='quotes';$('#presetNav').classList.toggle('active',page==='preset');
+      $('#presetNav').hidden=page==='home'||page==='news'||page==='achievements'||page==='quotes'||page==='settings';$('#navTitle').hidden=page==='home'||page==='news'||page==='achievements'||page==='quotes';$('#presetNav').classList.toggle('active',page==='preset');
       $('#presetsPanel').hidden=true;$('#presetNav').setAttribute('aria-expanded','false');
       window.scrollTo(0,0);
     }
     $('#backNav').onclick=()=>{if(pageHistory.length<2)return;pageHistory.pop();showPage(pageHistory.at(-1),false)};
     $('#homeNav').onclick=()=>showPage('home');
     $('#newsNav').onclick=()=>showPage('news');
+    $('#achievementsNav').onclick=()=>showPage('achievements');
     $('#newsContinue').onclick=()=>showPage('home');
     $('#quotesNav').onclick=()=>showPage('quotes');
     $('#enterList').onclick=()=>showPage('list');
