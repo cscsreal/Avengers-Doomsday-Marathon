@@ -274,6 +274,21 @@ html[data-theme] body :is(button,input,textarea,select,summary):focus-visible{ou
 :root{--ui-font:'Doom Body',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--heading-font:'Doom Heading',ui-sans-serif,system-ui,sans-serif}
 h1,h2,h3,.fallback-title,.nav-title>span[data-i18n="roadsTitle"],#enterList,.preset-emblem,#unlockPanel>span{font-family:var(--heading-font);font-weight:400}
 #enterList>span,.preset-trigger span,.preset-add,.icon-btn,.drag{font-family:ui-sans-serif,system-ui,sans-serif}
+
+/* Readable custom type sizes on desktop and mobile. */
+body{font-size:18px;line-height:1.65}
+.movie-title,#filmDetail #detailTitle{font-family:var(--ui-font);font-weight:400}
+.movie-title{font-size:1.2rem;line-height:1.4}.movie-info{min-height:78px}
+#filmDetail #detailTitle{font-size:1.65rem}
+.btn{font-size:1.05rem}.nav-title,.site-nav>#navTitle{font-size:1.15rem}.nav-count{font-size:.9rem}
+label,#saveListDialog label{font-size:1rem}
+html[data-theme] body :is(input,textarea,select){font-size:18px}
+.rating-preview,.counter,.quote-source,.quote-link,.saved-hint,.preset-footer,.all-movies summary,.all-movies ol,.notice,.undo-panel{font-size:1rem}
+.news-card p,.quote-description,.achievement-card p,.achievement-card li,.achievement-card summary{font-size:1.1rem;line-height:1.65}
+.achievement-card h2{font-size:1.4rem;line-height:1.45}
+.news-card h2,.list-head h2,.settings-content h2{font-size:1.25rem}
+#filmDetail .detail-fields label>span{min-height:2.6em}
+@media(max-width:760px){body{font-size:17px}.movie-title{font-size:1.08rem}.movie-info{min-height:74px}.rating-preview{font-size:.95rem}.site-nav>#navTitle{font-size:1.05rem}.nav-count{font-size:.85rem}.preset-footer{font-size:.95rem}.achievement-card h2{font-size:1.3rem}.btn{font-size:1rem}}
 </style>
 </head>
 <body>
